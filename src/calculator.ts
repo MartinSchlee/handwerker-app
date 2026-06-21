@@ -6,23 +6,33 @@ function rundeAufZweiStellen(betrag: number): number {
 }
 
 export function kalkuliereKV(kv: Kostenvoranschlag): KalkulationsErgebnis {
-  // 1. Netto-Summe aller Positionen berechnen
+  // 1. Einzelne Positionen berechnen und für das Interface mappen
+  const positionenBrutto = kv.positionen.map((pos, index) => {
+    const netto = pos.menge * pos.einzelpreisNetto;
+    const steuer = (netto * kv.steuerSatzProzent) / 100;
+    return {
+      id: index + 1,
+      brutto: rundeAufZweiStellen(netto + steuer)
+    };
+  });
+
+  // 2. Netto-Summe aller Positionen berechnen
   const nettoSumme = kv.positionen.reduce((summe, pos) => {
-    const positionsGesamt = pos.menge * pos.einzelpreisNetto;
-    return summe + positionsGesamt;
+    return summe + (pos.menge * pos.einzelpreisNetto);
   }, 0);
 
-  // 2. Steuer berechnen
+  // 3. Steuer berechnen
   const steuerBetrag = (nettoSumme * kv.steuerSatzProzent) / 100;
 
-  // 3. Runden, um JS-Fließkommafehler zu vermeiden
+  // 4. Runden, um JS-Fließkommafehler zu vermeiden
   const gerundeteNettoSumme = rundeAufZweiStellen(nettoSumme);
   const gerundeterSteuerBetrag = rundeAufZweiStellen(steuerBetrag);
   const bruttoSumme = rundeAufZweiStellen(gerundeteNettoSumme + gerundeterSteuerBetrag);
 
   return {
+    positionenBrutto, // Bindeglied zum Interface in types.ts
     nettoSumme: gerundeteNettoSumme,
-    steuerSumme: gerundeterSteuerBetrag, // <-- Hier auf steuerSumme vereinheitlicht!
+    steuerSumme: gerundeterSteuerBetrag,
     bruttoSumme: bruttoSumme
   };
 }
