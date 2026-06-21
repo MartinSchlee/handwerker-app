@@ -1,0 +1,23 @@
+{
+  "name": "handwerker-app",
+  "version": "1.0.0",
+  "description": "Handwerker App für Angebote und Rechnungen",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.10.0",
+    "pdfkit": "^0.15.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/pdfkit": "^0.13.3",
+    "prisma": "^5.10.0",
+    "typescript": "^5.3.3"
+  }
+}

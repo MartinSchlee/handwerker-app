@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Kunde {
+  id               Int                @id @default(autoincrement())
+  firma            String?
+  ansprechpartner  String
+  email            String             @unique
+  createdAt        DateTime           @default(now())
+  angebote         Kostenvoranschlag[]
+}
+
+model Kostenvoranschlag {
+  id                Int         @id @default(autoincrement())
+  kvNummer          String      @unique
+  status            String      @default("ENTWURF") // ENTWURF, GESENDET, ANGENOMMEN, ABGELEHNT
+  steuerSatzProzent Float       @default(19.0)
+  createdAt         DateTime    @default(now())
+  
+  kundeId           Int
+  kunde             Kunde       @relation(fields: [kundeId], references: [id], onDelete: Cascade)
+  positionen        Position[]
+}
+
+model Position {
+  id                  Int               @id @default(autoincrement())
+  typ                 String            // MATERIAL oder ARBEITSZEIT
+  bezeichnung         String
+  menge               Float
+  einheit             String            // Std, Stk, m, etc.
+  einzelpreisNetto    Float
+  
+  kostenvoranschlagId Int
+  kostenvoranschlag   Kostenvoranschlag @relation(fields: [kostenvoranschlagId], references: [id], onDelete: Cascade)
+}

@@ -1,0 +1,39 @@
+{
+  "id": "kv_2026_0001",
+  "status": "ENTWURF",
+  "datum": "2026-06-21",
+  "gueltig_bis": "2026-07-21",
+  "kunde": {
+    "id": "k_9982",
+    "firma": "Müller & Söhne GmbH",
+    "ansprechpartner": "Hans Müller",
+    "strasse_hnr": "Hauptstraße 42",
+    "plz": "04769",
+    "ort": "Mügeln",
+    "email": "hans.mueller@example.com"
+  },
+  "baustelle": {
+    "strasse_hnr": "Baustraße 7",
+    "plz": "04769",
+    "ort": "Mügeln"
+  },
+  "positionen": [
+    {
+      "id": 1,
+      "typ": "ARBEITSZEIT",
+      "bezeichnung": "Installation Elektroverteilung (Meisterstunde)",
+      "menge": 8.5,
+      "einheit": "Std",
+      "einzelpreis_netto": 65.00
+    },
+    {
+      "id": 2,
+      "typ": "MATERIAL",
+      "bezeichnung": "Kabel NYM-J 5x2,5 mm² 50m Ring",
+      "menge": 2,
+      "einheit": "Stk",
+      "einzelpreis_netto": 45.50
+    }
+  ],
+  "steuer_satz_prozent": 19.0
+}
